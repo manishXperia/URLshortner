@@ -16,12 +16,18 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from authentication.views import home, signup, login
+from authentication.views import home, signup, login, logout
+from urlshortner.views import dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('login/', login, name="login"),
     path('signup/', signup, name="signup"),
+    path('logout/', logout, name="logout"),
+    
+    # urls for dashboard
+    path('dashboard/', dashboard, name="dashboard"),
+    
     
 ]

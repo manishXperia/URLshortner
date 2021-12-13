@@ -6,20 +6,28 @@
     <div class="row">
         <div class="col-6 col-sm-6 col-md-5 col-lg-4 mx-auto">
             <h3>Signup </h3>
-            
-            <form action="" method="POST">
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"> 
+                    {{ error }}
+                
+                    <button type="button" class="close" data-dismiss="alert" area-label="Close">
+                        <span area-hidden-true>&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <form action="{% url 'signup' %}" method="POST">
                 {% csrf_token  %}
                 <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Username" id="">
+                    <input type="text" class="form-control" name="userName" autocomplete="off" placeholder="Username" id="">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="Email" id="">
+                    <input type="email" class="form-control" name="userEmail" autocomplete="off" placeholder="Email" id="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password" id="">
+                    <input type="password" class="form-control" name="password" autocomplete="off" placeholder="Password" id="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password2" placeholder="Confirm Password" id="">
+                    <input type="password" class="form-control" name="confirm_password" autocomplete="off" placeholder="Confirm Password" id="">
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-outline-success px-4" value="Signup">
