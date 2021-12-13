@@ -6,27 +6,31 @@ from django.contrib import messages, auth
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
-
-
 # handle the login authentication
 def login(request):
-    if request.method == "POST":
-        # check if userEmail and password are not empty
-        if request.POST['userEmail'] and request.POST['password']:
-            # check if userEmail exists and get the user objects
-            try:
-                user  = User.objects.get(email = request.POST['userEmail'])
-                # if user found --> logged in 
-                auth.login(request, user)
-                return redirect('/')
-            except User.DoesNotExist:
-                return render(request, 'login.html', { 'error': 'User Does not exists'})
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            # check if userEmail and password are not empty
+            if request.POST['userEmail'] and request.POST['password']:
+                # check if userEmail exists and get the user objects
+                try:
+                    user  = User.objects.get(email = request.POST['userEmail'])
+                    # if user found --> logged in 
+                    auth.login(request, user)
+                    # check if next param is in url
+                    if request.POST['next'] is not None:
+                        return redirect(request.POST.get('next'))
+                    else:
+                        return redirect('/')
+                    return redirect('/')
+                except User.DoesNotExist:
+                    return render(request, 'login.html', { 'error': 'User Does not exists'})
+            else:
+                return render(request, 'login.html', { 'error': 'Please check empty fields'})
         else:
-            return render(request, 'login.html', { 'error': 'Please check empty fields'})
+            return render(request, 'login.html')
     else:
-        return render(request, 'login.html')
+        return redirect('/')
 
 
 def signup(request):

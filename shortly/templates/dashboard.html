@@ -8,8 +8,18 @@
             <h3>Shorten A Url</h3>
         </div>
         <div class="col-10 col-sm-10 col-md-6 mx-auto">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert"> 
+                        {{ msg }}
+                        <button type="button" class="close" data-dismiss="alert" area-label="Close">
+                            <span area-hidden-true>&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-            <form action="" method="POST">
+            <form action="{% url 'generateUrl' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                     <input type="url" name="original" class="form-control" placeholder="Original Url">
@@ -39,11 +49,35 @@
         </div>
     </div>
     <div class="row justify-content-between">
+       {% comment %}  get all created urls lists by current user {% endcomment %}
        
-        
-        
+        {% for url in urls %}
+        <div class="col-10 col-sm-10 col-md-6 mb-2 mx-auto">
+
+            <div style="overflow: hidden;" class="customcontainer p-2">
+
+                <p style="text-overflow: ellipsis;">Original : <a href="{{ url.original_url }}" target="_blank"
+                        class="card-link">{{ url.original_url }}</a>
+                </p>
+
+                <p>Shorten : <a href="http://localhost:8000/{{ url.short_url }}" target="_blank"
+                        class="card-link">http://localhost:8000/{{ url.short_url }}</a></p>
+                <div class="row justify-content-between">
+                    <div class="col-6 col-sm-6 ">
+                        <h3>Visits : {{ url.visits }} </h3>
+                    </div>
+                    <div class="col-4">
+                       
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
             
-    
+        {% endfor %}
+   
    
     </div>
 </div>

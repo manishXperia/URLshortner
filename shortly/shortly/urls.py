@@ -16,8 +16,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from authentication.views import home, signup, login, logout
-from urlshortner.views import dashboard
+from authentication.views import signup, login, logout
+from urlshortner.views import dashboard, generate_url, home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,9 @@ urlpatterns = [
     
     # urls for dashboard
     path('dashboard/', dashboard, name="dashboard"),
+    path('generate-url/', generate_url, name="generateUrl"),
+    # this url path will manage the redirection on click of short url
+    path('<str:query_string>', home, name="home")
     
     
 ]
